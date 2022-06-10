@@ -1,10 +1,24 @@
-import { Directive } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit } from '@angular/core';
 
 @Directive({
-  selector: '[appAreaMouse]'
+  selector: '[areaMouse]',
 })
-export class AreaMouseDirective {
+export class AreaMouseDirective implements OnInit {
+  @Input() color = 'orange';
 
-  constructor() { }
+  @Input() height = '200';
 
+  constructor(private el: ElementRef<HTMLDivElement>) {}
+  ngOnInit(): void {
+    this.setBackground();
+    this.setHeight();
+  }
+
+  setBackground() {
+    this.el.nativeElement.style.backgroundColor = this.color;
+  }
+
+  setHeight() {
+    this.el.nativeElement.style.height = `${this.height}px`;
+  }
 }
