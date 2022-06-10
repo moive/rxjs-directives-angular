@@ -22,17 +22,17 @@ export class ReactiveContainerComponent implements OnInit {
       }, 3000);
     });
 
-    myObservable.subscribe(
-      (result) => {
+    myObservable.subscribe({
+      next: (result) => {
         console.log(result);
       },
-      (error) => {
+      error: (error) => {
         console.error(error);
       },
-      () => {
+      complete: () => {
         console.log('Observable completed');
-      }
-    );
+      },
+    });
   }
 
   ngOnInit(): void {}
