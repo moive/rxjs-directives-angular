@@ -1,5 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { filter, interval, map, Observable, Subscription, take } from 'rxjs';
+import {
+  filter,
+  fromEvent,
+  interval,
+  map,
+  Observable,
+  Subscription,
+  take,
+} from 'rxjs';
 
 @Component({
   selector: 'app-reactive-container',
@@ -14,6 +22,10 @@ export class ReactiveContainerComponent implements OnInit, OnDestroy {
   );
 
   mySubscription: Subscription | null = null;
+
+  subcriptor: Subscription | null = null;
+  x: number = 0;
+  y: number = 0;
 
   constructor() {
     /* let number = 0;
@@ -48,8 +60,20 @@ export class ReactiveContainerComponent implements OnInit, OnDestroy {
       next: (value) => console.log(value),
       complete: () => console.log('There are the first five numbers'),
     });
+
+    const obs = fromEvent<MouseEvent>(
+      document.querySelector('#area')!,
+      'mousemove'
+    );
+
+    this.subcriptor = obs.subscribe((ev) => {
+      this.x = ev.clientX;
+      this.y = ev.clientY;
+    });
   }
   ngOnDestroy(): void {
+    this.subcriptor?.unsubscribe();
+
     this.mySubscription?.unsubscribe();
     console.log('Component destroyed');
   }
