@@ -5,9 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ReactiveModule } from './components/reactive/reactive.module';
 import { ThemeDirective } from './directives/theme.directive';
+import { BtnDirective } from './directives/btn.directive';
 
 @NgModule({
-  declarations: [AppComponent, ThemeDirective],
+  declarations: [AppComponent, ThemeDirective, BtnDirective],
   imports: [BrowserModule, AppRoutingModule, ReactiveModule],
   providers: [],
   bootstrap: [AppComponent],
