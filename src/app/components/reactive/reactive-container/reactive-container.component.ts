@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { filter, interval, Observable } from 'rxjs';
+import { filter, interval, Observable, take } from 'rxjs';
 
 @Component({
   selector: 'app-reactive-container',
@@ -7,7 +7,7 @@ import { filter, interval, Observable } from 'rxjs';
   styleUrls: ['./reactive-container.component.scss'],
 })
 export class ReactiveContainerComponent implements OnInit {
-  myInterval: Observable<number> = interval(3000);
+  myInterval: Observable<number> = interval(1000);
 
   constructor() {
     /* let number = 0;
@@ -39,7 +39,10 @@ export class ReactiveContainerComponent implements OnInit {
 
   ngOnInit(): void {
     this.myInterval
-      .pipe(filter((value) => value % 2 === 0))
+      .pipe(
+        take(10),
+        filter((value) => value % 2 === 0)
+      )
       .subscribe((value) => console.log(value));
   }
 }
