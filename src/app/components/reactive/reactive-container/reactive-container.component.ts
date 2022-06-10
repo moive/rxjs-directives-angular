@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { filter, interval, Observable, take } from 'rxjs';
+import { filter, interval, map, Observable, take } from 'rxjs';
 
 @Component({
   selector: 'app-reactive-container',
@@ -7,7 +7,11 @@ import { filter, interval, Observable, take } from 'rxjs';
   styleUrls: ['./reactive-container.component.scss'],
 })
 export class ReactiveContainerComponent implements OnInit {
-  myInterval: Observable<number> = interval(1000);
+  myInterval: Observable<number> = interval(1000).pipe(
+    map((value) => value + 1),
+    filter((value) => value % 2 === 0),
+    take(5)
+  );
 
   constructor() {
     /* let number = 0;
@@ -38,11 +42,9 @@ export class ReactiveContainerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.myInterval
-      .pipe(
-        take(10),
-        filter((value) => value % 2 === 0)
-      )
-      .subscribe((value) => console.log(value));
+    this.myInterval.subscribe({
+      next: (value) => console.log(value),
+      complete: () => console.log('There are the first five numbers'),
+    });
   }
 }
